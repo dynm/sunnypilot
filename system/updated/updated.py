@@ -232,7 +232,15 @@ class Updater:
     b: str | None = self.params.get("UpdaterTargetBranch")
     if b is None:
       b = self.get_branch(BASEDIR)
-    b = SP_BRANCH_MIGRATIONS.get((HARDWARE.get_device_type(), b), b)
+    b = {
+      ("tici", "release3"): "release-tici",
+      ("tici", "release3-staging"): "release-tici",
+      ("tici", "master"): "master-tici",
+      ("tici", "nightly"): "release-tici",
+      ("tici", "nightly-dev"): "release-tici",
+
+      ("tizi", "release3"): "release-tizi",
+    }.get((HARDWARE.get_device_type(), b), b)
     return b
 
   @property
